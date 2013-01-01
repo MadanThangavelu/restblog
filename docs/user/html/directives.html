@@ -1,0 +1,458 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>restblog directives for docutils &mdash; restblog v1.2.2 documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.2.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="restblog v1.2.2 documentation" href="index.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="Getting and installing restblog" href="installing.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="examples.html" title="Examples"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installing.html" title="Getting and installing restblog"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">restblog v1.2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">restblog directives for docutils</a><ul>
+<li><a class="reference internal" href="#restblog"><tt class="docutils literal"><span class="pre">..</span> <span class="pre">restblog::</span></tt></a></li>
+<li><a class="reference internal" href="#fullstory"><tt class="docutils literal"><span class="pre">..</span> <span class="pre">fullstory::</span></tt></a></li>
+<li><a class="reference internal" href="#video"><tt class="docutils literal"><span class="pre">..</span> <span class="pre">video::</span></tt></a></li>
+<li><a class="reference internal" href="#sourcecode"><tt class="docutils literal"><span class="pre">..</span> <span class="pre">sourcecode::</span></tt></a><ul>
+<li><a class="reference internal" href="#the-pygments-restructuredtext-directive">The Pygments reStructuredText directive</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installing.html"
+                        title="previous chapter">Getting and installing restblog</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="examples.html"
+                        title="next chapter">Examples</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/directives.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="restblog-directives-for-docutils">
+<h1>restblog directives for docutils<a class="headerlink" href="#restblog-directives-for-docutils" title="Permalink to this headline">¶</a></h1>
+<p>Besides all the standard directives provided by docutils the following are
+specific for blogging with restblog.</p>
+<div class="section" id="restblog">
+<h2><tt class="docutils literal"><span class="pre">..</span> <span class="pre">restblog::</span></tt><a class="headerlink" href="#restblog" title="Permalink to this headline">¶</a></h2>
+<p>This is the main directive that identifies and describes either a post or a
+page.</p>
+<p>Options:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">:categories:</span></tt></p>
+<blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body">empty</td>
+</tr>
+</tbody>
+</table>
+<p>Comma-separated list of strings with the names of the categories.
+Categories must exist in the Wordpress blog already.</p>
+</blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">:id:</span></tt></p>
+<blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Type:</th><td class="field-body">integer</td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body">empty</td>
+</tr>
+</tbody>
+</table>
+<p>Post ID. This gets automatically filled-in by <tt class="docutils literal"><span class="pre">restblog</span></tt> immediately
+after inserting a post from a <tt class="docutils literal"><span class="pre">.rst</span></tt> text file.</p>
+</blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">:publish:</span></tt></p>
+<blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+<tr class="field"><th class="field-name">Valid values:</th><td class="field-body">yes or no</td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body">yes</td>
+</tr>
+</tbody>
+</table>
+<p>Whether the post or page should be immediately available in the blog upon
+insertion or not.</p>
+</blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">:source:</span></tt></p>
+<blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+<tr class="field"><th class="field-name">Valid values:</th><td class="field-body">yes or no</td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body">no</td>
+</tr>
+</tbody>
+</table>
+<p>When set to <tt class="docutils literal"><span class="pre">yes</span></tt>, <tt class="docutils literal"><span class="pre">restblog</span></tt> would include the actual
+reStructuredText source that produced the HTML contents. This is similar
+to what <tt class="docutils literal"><span class="pre">Sphinx</span></tt> would do.</p>
+<p><strong>Important</strong> This feature is currently disabled by default because the
+code is put into an invisible <tt class="docutils literal"><span class="pre">&lt;div/&gt;</span></tt> in the HTML at the beginning of
+the post body. This turned out to be problematic because Wordpress and
+other related tools, e.g. RSS feeds, ignore all attributes in the XML tags
+causing the source code to show up first in the RSS. This is very
+distracting and not ideal. Need to create a <tt class="docutils literal"><span class="pre">docutils</span></tt> <tt class="docutils literal"><span class="pre">transform</span></tt> to
+place the code at the end of the contents. This is in the list of things
+to do.</p>
+</blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">:tags:</span></tt></p>
+<blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body">empty</td>
+</tr>
+</tbody>
+</table>
+<p>Comma-separated list of strings with the names of the tags.
+Tags need not exist already and can be pretty much anything you like.</p>
+</blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">:title:</span></tt></p>
+<blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body">empty</td>
+</tr>
+</tbody>
+</table>
+<p>The title for the post or page. If left empty, <tt class="docutils literal"><span class="pre">restblog</span></tt> would use the
+name of the source file as the title.</p>
+</blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">:type:</span></tt></p>
+<blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+<tr class="field"><th class="field-name">Valid values:</th><td class="field-body">post or page</td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body">post</td>
+</tr>
+</tbody>
+</table>
+<p>Whether this is a post or a page.</p>
+</blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="fullstory">
+<h2><tt class="docutils literal"><span class="pre">..</span> <span class="pre">fullstory::</span></tt><a class="headerlink" href="#fullstory" title="Permalink to this headline">¶</a></h2>
+<p>Separates the excerpt from the rest of the contents. This basically translates
+into the <tt class="docutils literal"><span class="pre">&lt;!--more--&gt;</span></tt> tag that Wordpress uses to determine the excerpt.</p>
+</div>
+<div class="section" id="video">
+<h2><tt class="docutils literal"><span class="pre">..</span> <span class="pre">video::</span></tt><a class="headerlink" href="#video" title="Permalink to this headline">¶</a></h2>
+<p>Embeds a video from either vimeo or YouTube. It can be used in two ways:</p>
+<ol class="arabic">
+<li><p class="first">URL:</p>
+<div class="highlight-python"><pre>.. video:: url</pre>
+</div>
+<p>Examples:</p>
+<div class="highlight-python"><pre>.. video:: http://vimeo.com/7809605
+
+.. video:: http://www.youtube.com/watch?v=qVDUYJo3CjU</pre>
+</div>
+</li>
+<li><p class="first">Service and video ID:</p>
+<div class="highlight-python"><pre>.. video:: service video</pre>
+</div>
+<p>Examples:</p>
+<div class="highlight-python"><pre>.. video:: vimeo 7809605
+
+.. video:: youtube qVDUYJo3CjU</pre>
+</div>
+</li>
+</ol>
+<p>Options:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">:width:</span></tt></p>
+<blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Type:</th><td class="field-body">integer</td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body">400</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">:height:</span></tt></p>
+<blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Type:</th><td class="field-body">integer</td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body">300</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">:fullscreen:</span></tt></p>
+<blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+<tr class="field"><th class="field-name">Valid values:</th><td class="field-body">yes or no</td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body">yes</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">:scriptaccess:</span></tt></p>
+<blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+<tr class="field"><th class="field-name">Valid values:</th><td class="field-body">yes or no</td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body">yes</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+</li>
+</ul>
+<p>Options for vimeo only:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">:title:</span></tt></p>
+<blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+<tr class="field"><th class="field-name">Valid values:</th><td class="field-body">yes or no</td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body">yes</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">:byline:</span></tt></p>
+<blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+<tr class="field"><th class="field-name">Valid values:</th><td class="field-body">yes or no</td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body">yes</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">:portrait:</span></tt></p>
+<blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+<tr class="field"><th class="field-name">Valid values:</th><td class="field-body">yes or no</td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body">yes</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="sourcecode">
+<h2><tt class="docutils literal"><span class="pre">..</span> <span class="pre">sourcecode::</span></tt><a class="headerlink" href="#sourcecode" title="Permalink to this headline">¶</a></h2>
+<p>This is a verbatim copy of the Pygments directive that provides beautiful
+syntax highlighting for a wide range of programming and scripting languages.
+It is copyrighted by the Pygments authors:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">copyright:</th><td class="field-body">Copyright 2006-2009 by the Pygments team, see AUTHORS.</td>
+</tr>
+<tr class="field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for details.</td>
+</tr>
+</tbody>
+</table>
+<p>Verbatim documentation from original authors:</p>
+<span class="target" id="module-restblog.directives.rstpygments"></span><div class="section" id="the-pygments-restructuredtext-directive">
+<h3>The Pygments reStructuredText directive<a class="headerlink" href="#the-pygments-restructuredtext-directive" title="Permalink to this headline">¶</a></h3>
+<p>This fragment is a <a class="reference external" href="http://docutils.sf.net/">Docutils</a> 0.5 directive that renders source code
+(to HTML only, currently) via Pygments.</p>
+<p>To use it, adjust the options below and copy the code into a module
+that you import on initialization.  The code then automatically
+registers a <tt class="docutils literal"><span class="pre">sourcecode</span></tt> directive that you can use instead of
+normal code blocks like this:</p>
+<div class="highlight-python"><pre>.. sourcecode:: python
+
+    My code goes here.</pre>
+</div>
+<p>If you want to have different code styles, e.g. one with line numbers
+and one without, add formatters with their names in the VARIANTS dict
+below.  You can invoke them instead of the DEFAULT one by using a
+directive option:</p>
+<div class="highlight-python"><pre>.. sourcecode:: python
+    :linenos:
+
+    My code goes here.</pre>
+</div>
+<p>Look at the <a class="reference external" href="http://docutils.sourceforge.net/docs/howto/rst-directives.html">directive documentation</a> to get all the gory details.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">copyright:</th><td class="field-body">Copyright 2006-2009 by the Pygments team, see AUTHORS.</td>
+</tr>
+<tr class="field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for details.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="examples.html" title="Examples"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installing.html" title="Getting and installing restblog"
+             >previous</a> |</li>
+        <li><a href="index.html">restblog v1.2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, Luis Artola.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0b2.
+    </div>
+  </body>
+</html>

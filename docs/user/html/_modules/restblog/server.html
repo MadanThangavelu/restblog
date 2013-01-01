@@ -1,0 +1,405 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>restblog.server &mdash; restblog v1.2.2 documentation</title>
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.2.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="restblog v1.2.2 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">restblog v1.2.2 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for restblog.server</h1><div class="highlight"><pre>
+<span class="c"># No shebang line. This module is meant to be imported.</span>
+
+<span class="c">#</span>
+<span class="c"># Copyright 2010. Luis Artola. All rights reserved.</span>
+<span class="c">#</span>
+
+<span class="c">#</span>
+<span class="c"># $URL: file:///svn/restblog/trunk/src/python/restblog/server.py $</span>
+<span class="c"># $Date: 2010-07-31 14:27:54 -0700 (Sat, 31 Jul 2010) $</span>
+<span class="c"># $Revision: 186 $</span>
+<span class="c">#</span>
+<span class="c"># History:</span>
+<span class="c"># 2010.06.27 lartola    Initial working version</span>
+<span class="c">#</span>
+
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Encapsulates a connection to a blog server and provides a simplified API to</span>
+<span class="sd">manage posts and pages.</span>
+
+<span class="sd">:copyright: Copyright 2010 Luis Artola.</span>
+<span class="sd">:license: BSD, see LICENSE.txt for details.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+
+<span class="kn">import</span> <span class="nn">getpass</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">xml.etree</span> <span class="kn">import</span> <span class="n">ElementTree</span>
+<span class="kn">import</span> <span class="nn">xmlrpclib</span>
+
+
+<div class="viewcode-block" id="Server"><a class="viewcode-back" href="../../api.html#restblog.server.Server">[docs]</a><span class="k">class</span> <span class="nc">Server</span><span class="p">(</span> <span class="nb">object</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Server( url, user=&#39;&#39;, password=&#39;&#39; ) -&gt; instance</span>
+
+<span class="sd">    Provides a simplified API to a subset of methods from the various blogging</span>
+<span class="sd">    APIs, i.e.  Wordpress, MetaWeblog, Blogger, MoveableType. Manages the</span>
+<span class="sd">    connection to a blog server using XMLRPC.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    - url: Address of the XMLRPC blog server, e.g. http://your.blog.com/xmlrpc.php</span>
+<span class="sd">    - user: Optional user name.</span>
+<span class="sd">    - password: Optional password.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s">&#39;&#39;</span> <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__blog</span> <span class="o">=</span> <span class="n">xmlrpclib</span><span class="o">.</span><span class="n">Server</span><span class="p">(</span> <span class="n">url</span> <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__user</span> <span class="o">=</span> <span class="n">user</span> <span class="k">if</span> <span class="n">user</span> <span class="k">else</span> <span class="s">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__password</span> <span class="o">=</span> <span class="n">password</span> <span class="k">if</span> <span class="n">password</span> <span class="k">else</span> <span class="s">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__blog_id</span> <span class="o">=</span> <span class="mi">1</span>
+
+
+<div class="viewcode-block" id="Server.getRecentPostTitles"><a class="viewcode-back" href="../../api.html#restblog.server.Server.getRecentPostTitles">[docs]</a>    <span class="k">def</span> <span class="nf">getRecentPostTitles</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">10</span> <span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;getRecentPostTitles( count=10 ) -&gt; list</span>
+
+<span class="sd">        Returns a list with minimal information about the most recent posts.</span>
+
+<span class="sd">        Encapsulates MoveableType function ``mt.getRecentPostTitles``.</span>
+
+<span class="sd">        Parameters:</span>
+
+<span class="sd">        - count: Number of posts to retrieve. Default is 10.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        A list of dictionaries representing data from the post. Including</span>
+<span class="sd">        ``postid``, ``title`` and ``dateCreated``.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">titles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__blog</span><span class="o">.</span><span class="n">mt</span><span class="o">.</span><span class="n">getRecentPostTitles</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__blog_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__password</span><span class="p">,</span> <span class="n">count</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">titles</span>
+
+</div>
+<div class="viewcode-block" id="Server.newPost"><a class="viewcode-back" href="../../api.html#restblog.server.Server.newPost">[docs]</a>    <span class="k">def</span> <span class="nf">newPost</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">contents</span><span class="p">,</span> <span class="n">publish</span> <span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;newPost( contents, publish ) -&gt; int</span>
+
+<span class="sd">        Creates a new post.</span>
+
+<span class="sd">        Encapsulates MetaWeblog function ``metaWeblog.newPost``.</span>
+
+<span class="sd">        Parameters:</span>
+
+<span class="sd">        - contents: A dictionary with the keys listed below.</span>
+<span class="sd">            </span>
+<span class="sd">            - title: str</span>
+<span class="sd">            - description: str</span>
+<span class="sd">            - mt_excerpt: str</span>
+<span class="sd">            - mt_text_more: str</span>
+<span class="sd">            - mt_keywords: list</span>
+<span class="sd">            - categories: list</span>
+
+<span class="sd">        - publish: Whether to publish immediately or not. Default is True.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        An integer with the post ID just created.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="nb">id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__blog</span><span class="o">.</span><span class="n">metaWeblog</span><span class="o">.</span><span class="n">newPost</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__blog_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__password</span><span class="p">,</span> <span class="n">contents</span><span class="p">,</span> <span class="n">publish</span> 
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="nb">id</span>
+
+</div>
+<div class="viewcode-block" id="Server.editPost"><a class="viewcode-back" href="../../api.html#restblog.server.Server.editPost">[docs]</a>    <span class="k">def</span> <span class="nf">editPost</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">contents</span><span class="p">,</span> <span class="n">publish</span> <span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;edit( contents, publish ) -&gt; bool</span>
+
+<span class="sd">        Updates the post with the given ``id`` and ``contents``.</span>
+
+<span class="sd">        Encapsulates MetaWeblog function ``metaWeblog.editPost``.</span>
+
+<span class="sd">        Parameters:</span>
+
+<span class="sd">        - contents: A dictionary with the keys listed below.</span>
+<span class="sd">            </span>
+<span class="sd">            - title: str</span>
+<span class="sd">            - description: str</span>
+<span class="sd">            - mt_excerpt: str</span>
+<span class="sd">            - mt_text_more: str</span>
+<span class="sd">            - mt_keywords: list</span>
+<span class="sd">            - categories: list</span>
+
+<span class="sd">        - publish: Whether to publish changes immediately or not.</span>
+<span class="sd">          Default is True.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        True if the update was successful. False otherwise.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">success</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__blog</span><span class="o">.</span><span class="n">metaWeblog</span><span class="o">.</span><span class="n">editPost</span><span class="p">(</span>
+            <span class="nb">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__password</span><span class="p">,</span> <span class="n">contents</span><span class="p">,</span> <span class="n">publish</span> 
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">success</span>
+
+</div>
+    <span class="k">def</span> <span class="nf">getPost</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="nb">id</span> <span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;getPost( id ) -&gt; dict</span>
+
+<span class="sd">        Returns the post with the given ``id``.</span>
+
+<span class="sd">        Encapsulates MetaWeblog function ``metaWeblog.getPost``.</span>
+
+<span class="sd">        Parameters:</span>
+
+<span class="sd">        - id: Post ID to return.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        - A dictionary with the keys listed below.</span>
+<span class="sd">            </span>
+<span class="sd">            - title: str</span>
+<span class="sd">            - description: str</span>
+<span class="sd">            - mt_excerpt: str</span>
+<span class="sd">            - mt_text_more: str</span>
+<span class="sd">            - mt_keywords: list</span>
+<span class="sd">            - categories: list</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">post</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__blog</span><span class="o">.</span><span class="n">metaWeblog</span><span class="o">.</span><span class="n">getPost</span><span class="p">(</span>
+            <span class="nb">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__password</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">post</span>
+
+
+<div class="viewcode-block" id="Server.deletePost"><a class="viewcode-back" href="../../api.html#restblog.server.Server.deletePost">[docs]</a>    <span class="k">def</span> <span class="nf">deletePost</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">publish</span> <span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;deletePost( id, publish ) -&gt; bool</span>
+
+<span class="sd">        Deletes post with the given ``id``.</span>
+
+<span class="sd">        Encapsulates MetaWeblog function ``metaWeblog.deletePost``.</span>
+
+<span class="sd">        Parameters:</span>
+
+<span class="sd">        - id: Post ID to delete.</span>
+<span class="sd">        - publish: Whether to publish the deletion immediately or not.</span>
+<span class="sd">          Default is True.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        True if the deletion was successful. False otherwise.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">success</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__blog</span><span class="o">.</span><span class="n">metaWeblog</span><span class="o">.</span><span class="n">deletePost</span><span class="p">(</span>
+            <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__password</span><span class="p">,</span> <span class="n">publish</span> 
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">success</span>
+
+</div>
+<div class="viewcode-block" id="Server.newPage"><a class="viewcode-back" href="../../api.html#restblog.server.Server.newPage">[docs]</a>    <span class="k">def</span> <span class="nf">newPage</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">contents</span><span class="p">,</span> <span class="n">publish</span> <span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;newPage( contents, publish ) -&gt; int</span>
+
+<span class="sd">        Creates a new page. This function is practically identical to</span>
+<span class="sd">        ``newPost``. It receives the same parameters. One note though,</span>
+<span class="sd">        ``contents`` may have some extra keys that do not quite apply</span>
+<span class="sd">        to pages, e.g. tags and categories, but are gracefully ignored</span>
+<span class="sd">        by the actual implementation on the server side.</span>
+
+<span class="sd">        Encapsulates Wordpress function ``wp.newPage``.</span>
+
+<span class="sd">        Parameters:</span>
+
+<span class="sd">        - contents: A dictionary with the keys described in ``newPost``.</span>
+<span class="sd">        - publish: Whether to publish immediately or not. Default is True.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        An integer with the page ID just created.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="nb">id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__blog</span><span class="o">.</span><span class="n">wp</span><span class="o">.</span><span class="n">newPage</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__blog_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__password</span><span class="p">,</span> <span class="n">contents</span><span class="p">,</span> <span class="n">publish</span> 
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="nb">id</span>
+
+</div>
+<div class="viewcode-block" id="Server.editPage"><a class="viewcode-back" href="../../api.html#restblog.server.Server.editPage">[docs]</a>    <span class="k">def</span> <span class="nf">editPage</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">contents</span><span class="p">,</span> <span class="n">publish</span> <span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;editPage( id, contents, publish ) -&gt; bool</span>
+
+<span class="sd">        Edit page with the given ``id``. This function is practically</span>
+<span class="sd">        identical to ``editPost``. It receives the same parameters.</span>
+<span class="sd">        One note though, ``contents`` may have some extra keys that do not</span>
+<span class="sd">        quite apply to pages, e.g. tags and categories, but are gracefully</span>
+<span class="sd">        ignored by the actual implementation on the server side.</span>
+
+<span class="sd">        Encapsulates Wordpress function ``wp.editPage``.</span>
+
+<span class="sd">        Parameters:</span>
+
+<span class="sd">        - contents: A dictionary with the keys described in ``editPost``.</span>
+<span class="sd">        - publish: Whether to publish immediately or not. Default is True.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        True if the update was successful. False otherwise.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">success</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__blog</span><span class="o">.</span><span class="n">wp</span><span class="o">.</span><span class="n">editPage</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__blog_id</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__password</span><span class="p">,</span> <span class="n">contents</span><span class="p">,</span> <span class="n">publish</span> 
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">success</span>
+
+</div>
+    <span class="k">def</span> <span class="nf">ping</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;ping()</span>
+
+<span class="sd">        Sends a request to the server just to verify that it can log in with</span>
+<span class="sd">        the credentials given when constructing the ``Server`` instance.</span>
+
+<span class="sd">        Raises an exception if the request fails for any reason, including</span>
+<span class="sd">        bad credentials or simply connection errors.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="c"># Verify that we can connect to the server and there are remote methods</span>
+        <span class="c"># in the API that can be executed.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__blog</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">listMethods</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="connect"><a class="viewcode-back" href="../../api.html#restblog.server.connect">[docs]</a><span class="k">def</span> <span class="nf">connect</span><span class="p">(</span> <span class="n">url</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">interactive</span><span class="o">=</span><span class="bp">False</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;connect( url=&#39;&#39;, user=&#39;&#39;, password=&#39;&#39;, interactive=False ) -&gt; Server</span>
+
+<span class="sd">    Convenience function to create a ``Server`` object. This is the preferred</span>
+<span class="sd">    method over constructing a ``Server`` directly. It would attempt to use</span>
+<span class="sd">    the given credentials if not empty. Otherwise, it would look into the</span>
+<span class="sd">    *.restblog* directory, if it exists, to extract the default credentials.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    - url: Address of the XMLRPC blog server, e.g. http://your.blog.com/xmlrpc.php</span>
+<span class="sd">    - user: Optional user name.</span>
+<span class="sd">    - password: Optional password.</span>
+<span class="sd">    - interactive: Prompts user for missing credentials like user and/or</span>
+<span class="sd">      password when set to True. By default it is set to False meaning that it</span>
+<span class="sd">      would use the given credentials and fail if it can&#39;t connect for any</span>
+<span class="sd">      reason.</span>
+
+<span class="sd">    Returns:</span>
+
+<span class="sd">    A ``Server`` instance.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c"># Attempt to extract missing credentials from the .restblog</span>
+    <span class="c"># directory first</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s">&#39;.restblog&#39;</span><span class="p">,</span> <span class="s">&#39;restblog.xml&#39;</span> <span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">url</span> <span class="ow">and</span> <span class="n">file_name</span><span class="p">:</span>
+        <span class="n">document</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span> <span class="n">file_name</span> <span class="p">)</span>
+        <span class="n">restblog</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+        <span class="n">server</span> <span class="o">=</span> <span class="n">restblog</span><span class="o">.</span><span class="n">find</span><span class="p">(</span> <span class="s">&#39;server&#39;</span> <span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span> <span class="s">&#39;url&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span> <span class="p">)</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span> <span class="s">&#39;user&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span> <span class="p">)</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span> <span class="s">&#39;password&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span> <span class="p">)</span>
+
+    <span class="c"># We need a URL at the very least, fail if that&#39;s not the case</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">url</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">,</span> <span class="s">&#39;Please specify a blog URL&#39;</span>
+
+    <span class="c"># Fill in missing credentials if instructed to do so</span>
+    <span class="k">if</span> <span class="n">interactive</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">user</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span> <span class="s">&#39;User: &#39;</span> <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">password</span><span class="p">:</span>
+            <span class="n">password</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span> <span class="s">&#39;Password: &#39;</span> <span class="p">)</span>
+
+    <span class="c"># Attempt a server connection and verify that it works</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">server</span> <span class="o">=</span> <span class="n">Server</span><span class="p">(</span> <span class="n">url</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span> <span class="p">)</span>
+        <span class="n">server</span><span class="o">.</span><span class="n">ping</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">server</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">,</span> <span class="s">&#39;Unable to open connection to </span><span class="si">%(url)s</span><span class="s">. Error: </span><span class="si">%(ex)s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">()</span>
+    
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">restblog v1.2.2 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, Luis Artola.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0b2.
+    </div>
+  </body>
+</html>

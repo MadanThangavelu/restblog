@@ -1,0 +1,662 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>restblog.server.Server</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="restblog-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="restblog-module.html">Package&nbsp;restblog</a> ::
+        <a href="restblog.server-module.html">Module&nbsp;server</a> ::
+        Class&nbsp;Server
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="restblog.server.Server-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Server</h1><p class="nomargin-top"><span class="codelink"><a href="restblog.server-pysrc.html#Server">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+
+         |
+        <strong class="uidshort">Server</strong>
+</pre>
+
+<hr />
+<p>Server( url, user='', password='' ) -&gt; instance</p>
+<p>Provides a simplified API to a subset of methods from the various blogging
+APIs, i.e.  Wordpress, MetaWeblog, Blogger, MoveableType. Manages the
+connection to a blog server using XMLRPC.</p>
+<p>Parameters:</p>
+<ul class="rst-simple">
+<li>url: Address of the XMLRPC blog server, e.g. <a class="rst-reference external" href="http://your.blog.com/xmlrpc.php" target="_top">http://your.blog.com/xmlrpc.php</a></li>
+<li>user: Optional user name.</li>
+<li>password: Optional password.</li>
+</ul>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">instance</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="restblog.server.Server-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">url</span>,
+        <span class="summary-sig-arg">user</span>=<span class="summary-sig-default">''</span>,
+        <span class="summary-sig-arg">password</span>=<span class="summary-sig-default">''</span>)</span><br />
+      x.__init__(...) initializes x; see x.__class__.__doc__ for signature</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="restblog.server-pysrc.html#Server.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">list</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="restblog.server.Server-class.html#getRecentPostTitles" class="summary-sig-name">getRecentPostTitles</a>(<span class="summary-sig-arg">count</span>=<span class="summary-sig-default">10</span>)</span><br />
+      Returns a list with minimal information about the most recent posts.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="restblog.server-pysrc.html#Server.getRecentPostTitles">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">int</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="restblog.server.Server-class.html#newPost" class="summary-sig-name">newPost</a>(<span class="summary-sig-arg">contents</span>,
+        <span class="summary-sig-arg">publish</span>)</span><br />
+      Creates a new post.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="restblog.server-pysrc.html#Server.newPost">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">bool</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="restblog.server.Server-class.html#editPost" class="summary-sig-name">editPost</a>(<span class="summary-sig-arg">contents</span>,
+        <span class="summary-sig-arg">publish</span>)</span><br />
+      Updates the post with the given <tt class="rst-docutils literal">id</tt> and <tt class="rst-docutils literal">contents</tt>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="restblog.server-pysrc.html#Server.editPost">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">dict</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="restblog.server.Server-class.html#getPost" class="summary-sig-name">getPost</a>(<span class="summary-sig-arg">id</span>)</span><br />
+      Returns the post with the given <tt class="rst-docutils literal">id</tt>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="restblog.server-pysrc.html#Server.getPost">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">bool</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="restblog.server.Server-class.html#deletePost" class="summary-sig-name">deletePost</a>(<span class="summary-sig-arg">id</span>,
+        <span class="summary-sig-arg">publish</span>)</span><br />
+      Deletes post with the given <tt class="rst-docutils literal">id</tt>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="restblog.server-pysrc.html#Server.deletePost">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">int</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="restblog.server.Server-class.html#newPage" class="summary-sig-name">newPage</a>(<span class="summary-sig-arg">contents</span>,
+        <span class="summary-sig-arg">publish</span>)</span><br />
+      Creates a new page.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="restblog.server-pysrc.html#Server.newPage">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">bool</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="restblog.server.Server-class.html#editPage" class="summary-sig-name">editPage</a>(<span class="summary-sig-arg">id</span>,
+        <span class="summary-sig-arg">contents</span>,
+        <span class="summary-sig-arg">publish</span>)</span><br />
+      Edit page with the given <tt class="rst-docutils literal">id</tt>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="restblog.server-pysrc.html#Server.editPage">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="restblog.server.Server-class.html#ping" class="summary-sig-name">ping</a>()</span><br />
+      Sends a request to the server just to verify that it can log in with
+the credentials given when constructing the <tt class="rst-docutils literal">Server</tt> instance.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="restblog.server-pysrc.html#Server.ping">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">url</span>,
+        <span class="sig-arg">user</span>=<span class="sig-default">''</span>,
+        <span class="sig-arg">password</span>=<span class="sig-default">''</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="restblog.server-pysrc.html#Server.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  x.__init__(...) initializes x; see x.__class__.__doc__ for signature
+  <dl class="fields">
+    <dt>Returns: instance</dt>
+    <dt>Overrides:
+        object.__init__
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getRecentPostTitles"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getRecentPostTitles</span>(<span class="sig-arg">count</span>=<span class="sig-default">10</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="restblog.server-pysrc.html#Server.getRecentPostTitles">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns a list with minimal information about the most recent posts.</p>
+<p>Encapsulates MoveableType function <tt class="rst-docutils literal">mt.getRecentPostTitles</tt>.</p>
+<p>Parameters:</p>
+<ul class="rst-simple">
+<li>count: Number of posts to retrieve. Default is 10.</li>
+</ul>
+<p>Returns:</p>
+<p>A list of dictionaries representing data from the post. Including
+<tt class="rst-docutils literal">postid</tt>, <tt class="rst-docutils literal">title</tt> and <tt class="rst-docutils literal">dateCreated</tt>.</p>
+  <dl class="fields">
+    <dt>Returns: list</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="newPost"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">newPost</span>(<span class="sig-arg">contents</span>,
+        <span class="sig-arg">publish</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="restblog.server-pysrc.html#Server.newPost">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Creates a new post.</p>
+<p>Encapsulates MetaWeblog function <tt class="rst-docutils literal">metaWeblog.newPost</tt>.</p>
+<p>Parameters:</p>
+<ul>
+<li><p class="rst-first">contents: A dictionary with the keys listed below.</p>
+<blockquote>
+<ul class="rst-simple">
+<li>title: str</li>
+<li>description: str</li>
+<li>mt_excerpt: str</li>
+<li>mt_text_more: str</li>
+<li>mt_keywords: list</li>
+<li>categories: list</li>
+</ul>
+</blockquote>
+</li>
+<li><p class="rst-first">publish: Whether to publish immediately or not. Default is True.</p>
+</li>
+</ul>
+<p>Returns:</p>
+<p>An integer with the post ID just created.</p>
+  <dl class="fields">
+    <dt>Returns: int</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="editPost"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">editPost</span>(<span class="sig-arg">contents</span>,
+        <span class="sig-arg">publish</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="restblog.server-pysrc.html#Server.editPost">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Updates the post with the given <tt class="rst-rst-docutils literal rst-docutils literal">id</tt> and <tt class="rst-rst-docutils literal rst-docutils literal">contents</tt>.</p>
+<p>Encapsulates MetaWeblog function <tt class="rst-docutils literal">metaWeblog.editPost</tt>.</p>
+<p>Parameters:</p>
+<ul>
+<li><p class="rst-first">contents: A dictionary with the keys listed below.</p>
+<blockquote>
+<ul class="rst-simple">
+<li>title: str</li>
+<li>description: str</li>
+<li>mt_excerpt: str</li>
+<li>mt_text_more: str</li>
+<li>mt_keywords: list</li>
+<li>categories: list</li>
+</ul>
+</blockquote>
+</li>
+<li><p class="rst-first">publish: Whether to publish changes immediately or not.
+Default is True.</p>
+</li>
+</ul>
+<p>Returns:</p>
+<p>True if the update was successful. False otherwise.</p>
+  <dl class="fields">
+    <dt>Returns: bool</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getPost"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getPost</span>(<span class="sig-arg">id</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="restblog.server-pysrc.html#Server.getPost">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the post with the given <tt class="rst-rst-docutils literal rst-docutils literal">id</tt>.</p>
+<p>Encapsulates MetaWeblog function <tt class="rst-docutils literal">metaWeblog.getPost</tt>.</p>
+<p>Parameters:</p>
+<ul class="rst-simple">
+<li>id: Post ID to return.</li>
+</ul>
+<p>Returns:</p>
+<ul>
+<li><p class="rst-first">A dictionary with the keys listed below.</p>
+<blockquote>
+<ul class="rst-simple">
+<li>title: str</li>
+<li>description: str</li>
+<li>mt_excerpt: str</li>
+<li>mt_text_more: str</li>
+<li>mt_keywords: list</li>
+<li>categories: list</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+  <dl class="fields">
+    <dt>Returns: dict</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="deletePost"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">deletePost</span>(<span class="sig-arg">id</span>,
+        <span class="sig-arg">publish</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="restblog.server-pysrc.html#Server.deletePost">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Deletes post with the given <tt class="rst-rst-docutils literal rst-docutils literal">id</tt>.</p>
+<p>Encapsulates MetaWeblog function <tt class="rst-docutils literal">metaWeblog.deletePost</tt>.</p>
+<p>Parameters:</p>
+<ul class="rst-simple">
+<li>id: Post ID to delete.</li>
+<li>publish: Whether to publish the deletion immediately or not.
+Default is True.</li>
+</ul>
+<p>Returns:</p>
+<p>True if the deletion was successful. False otherwise.</p>
+  <dl class="fields">
+    <dt>Returns: bool</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="newPage"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">newPage</span>(<span class="sig-arg">contents</span>,
+        <span class="sig-arg">publish</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="restblog.server-pysrc.html#Server.newPage">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Creates a new page. This function is practically identical to
+<tt class="rst-docutils literal">newPost</tt>. It receives the same parameters. One note though,
+<tt class="rst-docutils literal">contents</tt> may have some extra keys that do not quite apply
+to pages, e.g. tags and categories, but are gracefully ignored
+by the actual implementation on the server side.</p>
+<p>Encapsulates Wordpress function <tt class="rst-docutils literal">wp.newPage</tt>.</p>
+<p>Parameters:</p>
+<ul class="rst-simple">
+<li>contents: A dictionary with the keys described in <tt class="rst-docutils literal">newPost</tt>.</li>
+<li>publish: Whether to publish immediately or not. Default is True.</li>
+</ul>
+<p>Returns:</p>
+<p>An integer with the page ID just created.</p>
+  <dl class="fields">
+    <dt>Returns: int</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="editPage"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">editPage</span>(<span class="sig-arg">id</span>,
+        <span class="sig-arg">contents</span>,
+        <span class="sig-arg">publish</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="restblog.server-pysrc.html#Server.editPage">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Edit page with the given <tt class="rst-rst-docutils literal rst-docutils literal">id</tt>. This function is practically
+identical to <tt class="rst-docutils literal">editPost</tt>. It receives the same parameters.
+One note though, <tt class="rst-docutils literal">contents</tt> may have some extra keys that do not
+quite apply to pages, e.g. tags and categories, but are gracefully
+ignored by the actual implementation on the server side.</p>
+<p>Encapsulates Wordpress function <tt class="rst-docutils literal">wp.editPage</tt>.</p>
+<p>Parameters:</p>
+<ul class="rst-simple">
+<li>contents: A dictionary with the keys described in <tt class="rst-docutils literal">editPost</tt>.</li>
+<li>publish: Whether to publish immediately or not. Default is True.</li>
+</ul>
+<p>Returns:</p>
+<p>True if the update was successful. False otherwise.</p>
+  <dl class="fields">
+    <dt>Returns: bool</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="ping"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ping</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="restblog.server-pysrc.html#Server.ping">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sends a request to the server just to verify that it can log in with
+the credentials given when constructing the <tt class="rst-rst-docutils literal rst-docutils literal">Server</tt> instance.</p>
+<p>Raises an exception if the request fails for any reason, including
+bad credentials or simply connection errors.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="restblog-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Fri Aug 20 17:44:58 2010
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

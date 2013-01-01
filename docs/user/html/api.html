@@ -1,0 +1,545 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Python API &mdash; restblog v1.2.2 documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.2.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="restblog v1.2.2 documentation" href="index.html" />
+    <link rel="prev" title="How does it work?" href="indepth.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="indepth.html" title="How does it work?"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">restblog v1.2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Python API</a><ul>
+<li><a class="reference internal" href="#module-restblog.server">restblog.server</a></li>
+<li><a class="reference internal" href="#module-restblog.post">restblog.post</a></li>
+<li><a class="reference internal" href="#module-restblog.directives">restblog.directives</a></li>
+<li><a class="reference internal" href="#module-restblog.directives.rstpygments">Third-party directives</a><ul>
+<li><a class="reference internal" href="#the-pygments-restructuredtext-directive">The Pygments reStructuredText directive</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-restblog.restblog2html">restblog.restblog2html</a></li>
+<li><a class="reference internal" href="#module-restblog.commandline">restblog.commandline</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="indepth.html"
+                        title="previous chapter">How does it work?</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/api.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="python-api">
+<h1>Python API<a class="headerlink" href="#python-api" title="Permalink to this headline">¶</a></h1>
+<p>This document presents the <em>public</em> API, meaning, the set of functions and
+classes that matter the most. If you are interested in all the nitty-gritty
+details, here&#8217;s a link to the epydoc documentation for the entire source
+code: <a class="reference external" href="../../api/index.html">restblog source code</a></p>
+<div class="section" id="module-restblog.server">
+<span id="restblog-server"></span><h2>restblog.server<a class="headerlink" href="#module-restblog.server" title="Permalink to this headline">¶</a></h2>
+<p>Encapsulates a connection to a blog server and provides a simplified API to
+manage posts and pages.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">copyright:</th><td class="field-body">Copyright 2010 Luis Artola.</td>
+</tr>
+<tr class="field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE.txt for details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="restblog.server.connect">
+<tt class="descclassname">restblog.server.</tt><tt class="descname">connect</tt><big>(</big><em>url=''</em>, <em>user=''</em>, <em>password=''</em>, <em>interactive=False</em><big>)</big><a class="reference internal" href="_modules/restblog/server.html#connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restblog.server.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>connect( url=&#8217;&#8216;, user=&#8217;&#8216;, password=&#8217;&#8216;, interactive=False ) -&gt; Server</p>
+<p>Convenience function to create a <tt class="docutils literal"><span class="pre">Server</span></tt> object. This is the preferred
+method over constructing a <tt class="docutils literal"><span class="pre">Server</span></tt> directly. It would attempt to use
+the given credentials if not empty. Otherwise, it would look into the
+<em>.restblog</em> directory, if it exists, to extract the default credentials.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li>url: Address of the XMLRPC blog server, e.g. <a class="reference external" href="http://your.blog.com/xmlrpc.php">http://your.blog.com/xmlrpc.php</a></li>
+<li>user: Optional user name.</li>
+<li>password: Optional password.</li>
+<li>interactive: Prompts user for missing credentials like user and/or
+password when set to True. By default it is set to False meaning that it
+would use the given credentials and fail if it can&#8217;t connect for any
+reason.</li>
+</ul>
+<p>Returns:</p>
+<p>A <tt class="docutils literal"><span class="pre">Server</span></tt> instance.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="restblog.server.Server">
+<em class="property">class </em><tt class="descclassname">restblog.server.</tt><tt class="descname">Server</tt><big>(</big><em>url</em>, <em>user=''</em>, <em>password=''</em><big>)</big><a class="reference internal" href="_modules/restblog/server.html#Server"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restblog.server.Server" title="Permalink to this definition">¶</a></dt>
+<dd><p>Server( url, user=&#8217;&#8216;, password=&#8217;&#8217; ) -&gt; instance</p>
+<p>Provides a simplified API to a subset of methods from the various blogging
+APIs, i.e.  Wordpress, MetaWeblog, Blogger, MoveableType. Manages the
+connection to a blog server using XMLRPC.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li>url: Address of the XMLRPC blog server, e.g. <a class="reference external" href="http://your.blog.com/xmlrpc.php">http://your.blog.com/xmlrpc.php</a></li>
+<li>user: Optional user name.</li>
+<li>password: Optional password.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="restblog.server.Server.getRecentPostTitles">
+<tt class="descclassname">Server.</tt><tt class="descname">getRecentPostTitles</tt><big>(</big><em>count=10</em><big>)</big><a class="reference internal" href="_modules/restblog/server.html#Server.getRecentPostTitles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restblog.server.Server.getRecentPostTitles" title="Permalink to this definition">¶</a></dt>
+<dd><p>getRecentPostTitles( count=10 ) -&gt; list</p>
+<p>Returns a list with minimal information about the most recent posts.</p>
+<p>Encapsulates MoveableType function <tt class="docutils literal"><span class="pre">mt.getRecentPostTitles</span></tt>.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li>count: Number of posts to retrieve. Default is 10.</li>
+</ul>
+<p>Returns:</p>
+<p>A list of dictionaries representing data from the post. Including
+<tt class="docutils literal"><span class="pre">postid</span></tt>, <tt class="docutils literal"><span class="pre">title</span></tt> and <tt class="docutils literal"><span class="pre">dateCreated</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="restblog.server.Server.newPost">
+<tt class="descclassname">Server.</tt><tt class="descname">newPost</tt><big>(</big><em>contents</em>, <em>publish</em><big>)</big><a class="reference internal" href="_modules/restblog/server.html#Server.newPost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restblog.server.Server.newPost" title="Permalink to this definition">¶</a></dt>
+<dd><p>newPost( contents, publish ) -&gt; int</p>
+<p>Creates a new post.</p>
+<p>Encapsulates MetaWeblog function <tt class="docutils literal"><span class="pre">metaWeblog.newPost</span></tt>.</p>
+<p>Parameters:</p>
+<ul>
+<li><p class="first">contents: A dictionary with the keys listed below.</p>
+<blockquote>
+<ul class="simple">
+<li>title: str</li>
+<li>description: str</li>
+<li>mt_excerpt: str</li>
+<li>mt_text_more: str</li>
+<li>mt_keywords: list</li>
+<li>categories: list</li>
+</ul>
+</blockquote>
+</li>
+<li><p class="first">publish: Whether to publish immediately or not. Default is True.</p>
+</li>
+</ul>
+<p>Returns:</p>
+<p>An integer with the post ID just created.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="restblog.server.Server.editPost">
+<tt class="descclassname">Server.</tt><tt class="descname">editPost</tt><big>(</big><em>id</em>, <em>contents</em>, <em>publish</em><big>)</big><a class="reference internal" href="_modules/restblog/server.html#Server.editPost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restblog.server.Server.editPost" title="Permalink to this definition">¶</a></dt>
+<dd><p>edit( contents, publish ) -&gt; bool</p>
+<p>Updates the post with the given <tt class="docutils literal"><span class="pre">id</span></tt> and <tt class="docutils literal"><span class="pre">contents</span></tt>.</p>
+<p>Encapsulates MetaWeblog function <tt class="docutils literal"><span class="pre">metaWeblog.editPost</span></tt>.</p>
+<p>Parameters:</p>
+<ul>
+<li><p class="first">contents: A dictionary with the keys listed below.</p>
+<blockquote>
+<ul class="simple">
+<li>title: str</li>
+<li>description: str</li>
+<li>mt_excerpt: str</li>
+<li>mt_text_more: str</li>
+<li>mt_keywords: list</li>
+<li>categories: list</li>
+</ul>
+</blockquote>
+</li>
+<li><p class="first">publish: Whether to publish changes immediately or not.
+Default is True.</p>
+</li>
+</ul>
+<p>Returns:</p>
+<p>True if the update was successful. False otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="restblog.server.Server.deletePost">
+<tt class="descclassname">Server.</tt><tt class="descname">deletePost</tt><big>(</big><em>id</em>, <em>publish</em><big>)</big><a class="reference internal" href="_modules/restblog/server.html#Server.deletePost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restblog.server.Server.deletePost" title="Permalink to this definition">¶</a></dt>
+<dd><p>deletePost( id, publish ) -&gt; bool</p>
+<p>Deletes post with the given <tt class="docutils literal"><span class="pre">id</span></tt>.</p>
+<p>Encapsulates MetaWeblog function <tt class="docutils literal"><span class="pre">metaWeblog.deletePost</span></tt>.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li>id: Post ID to delete.</li>
+<li>publish: Whether to publish the deletion immediately or not.
+Default is True.</li>
+</ul>
+<p>Returns:</p>
+<p>True if the deletion was successful. False otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="restblog.server.Server.newPage">
+<tt class="descclassname">Server.</tt><tt class="descname">newPage</tt><big>(</big><em>contents</em>, <em>publish</em><big>)</big><a class="reference internal" href="_modules/restblog/server.html#Server.newPage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restblog.server.Server.newPage" title="Permalink to this definition">¶</a></dt>
+<dd><p>newPage( contents, publish ) -&gt; int</p>
+<p>Creates a new page. This function is practically identical to
+<tt class="docutils literal"><span class="pre">newPost</span></tt>. It receives the same parameters. One note though,
+<tt class="docutils literal"><span class="pre">contents</span></tt> may have some extra keys that do not quite apply
+to pages, e.g. tags and categories, but are gracefully ignored
+by the actual implementation on the server side.</p>
+<p>Encapsulates Wordpress function <tt class="docutils literal"><span class="pre">wp.newPage</span></tt>.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li>contents: A dictionary with the keys described in <tt class="docutils literal"><span class="pre">newPost</span></tt>.</li>
+<li>publish: Whether to publish immediately or not. Default is True.</li>
+</ul>
+<p>Returns:</p>
+<p>An integer with the page ID just created.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="restblog.server.Server.editPage">
+<tt class="descclassname">Server.</tt><tt class="descname">editPage</tt><big>(</big><em>id</em>, <em>contents</em>, <em>publish</em><big>)</big><a class="reference internal" href="_modules/restblog/server.html#Server.editPage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restblog.server.Server.editPage" title="Permalink to this definition">¶</a></dt>
+<dd><p>editPage( id, contents, publish ) -&gt; bool</p>
+<p>Edit page with the given <tt class="docutils literal"><span class="pre">id</span></tt>. This function is practically
+identical to <tt class="docutils literal"><span class="pre">editPost</span></tt>. It receives the same parameters.
+One note though, <tt class="docutils literal"><span class="pre">contents</span></tt> may have some extra keys that do not
+quite apply to pages, e.g. tags and categories, but are gracefully
+ignored by the actual implementation on the server side.</p>
+<p>Encapsulates Wordpress function <tt class="docutils literal"><span class="pre">wp.editPage</span></tt>.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li>contents: A dictionary with the keys described in <tt class="docutils literal"><span class="pre">editPost</span></tt>.</li>
+<li>publish: Whether to publish immediately or not. Default is True.</li>
+</ul>
+<p>Returns:</p>
+<p>True if the update was successful. False otherwise.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-restblog.post">
+<span id="restblog-post"></span><h2>restblog.post<a class="headerlink" href="#module-restblog.post" title="Permalink to this headline">¶</a></h2>
+<p>Functions to transform and manipulate a restblog post from XHTML.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">copyright:</th><td class="field-body">Copyright 2010 Luis Artola.</td>
+</tr>
+<tr class="field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE.txt for details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="restblog.post.createFormattedPost">
+<tt class="descclassname">restblog.post.</tt><tt class="descname">createFormattedPost</tt><big>(</big><em>file_name</em><big>)</big><a class="reference internal" href="_modules/restblog/post.html#createFormattedPost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restblog.post.createFormattedPost" title="Permalink to this definition">¶</a></dt>
+<dd><p>createFormattedPost( file_name ) -&gt; str</p>
+<p>Translates the given <cite>file_name</cite> into an XHTML document.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li>file_name: Input file with a post in reStructuredText format.</li>
+</ul>
+<p>Returns the name of a file with the XHTML document.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="restblog.post.getPostContents">
+<tt class="descclassname">restblog.post.</tt><tt class="descname">getPostContents</tt><big>(</big><em>file_name</em><big>)</big><a class="reference internal" href="_modules/restblog/post.html#getPostContents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restblog.post.getPostContents" title="Permalink to this definition">¶</a></dt>
+<dd><p>getPostContents( file_name ) -&gt; ( <cite>xml.etree.ElementTree.Element</cite>, dict )</p>
+<p>Extracts the relevant portions of the post from the given XHTML <cite>file_name</cite>.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li>file_name: Name of the XHTML input file name.</li>
+</ul>
+<p>Returns a tuple with the following values:</p>
+<ul>
+<li><p class="first">An <cite>xml.etree.ElementTree.Element</cite> that contains the post metadata. This is
+basically the options extracted from the <tt class="docutils literal"><span class="pre">..</span> <span class="pre">restblog::</span></tt> directive
+stored in the input reStructuredText file used to produce the given XHTML
+<cite>file_name</cite>. See <cite>restblog.directives.restblogheader</cite> for more information.</p>
+</li>
+<li><p class="first">A dictionary with the actual portion of the XHTML document that contains
+the post contents. Contains the following keys:</p>
+<blockquote>
+<ul class="simple">
+<li>title: str</li>
+<li>description: str</li>
+<li>mt_excerpt: str</li>
+<li>mt_text_more: str</li>
+<li>mt_keywords: list</li>
+<li>categories: list</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="module-restblog.directives">
+<span id="restblog-directives"></span><h2>restblog.directives<a class="headerlink" href="#module-restblog.directives" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">copyright:</th><td class="field-body">Copyright 2010 Luis Artola.</td>
+</tr>
+<tr class="field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE.txt for details.</td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-restblog.directives.restblogheader"></span><p>The restblog directive.</p>
+<p>Usage:</p>
+<div class="highlight-python"><pre>.. restblog::
+    :type: post or page
+    :title: string
+    :categories: comma-separated list of strings
+    :tags: comma-separated list of strings
+    :publish: yes or no
+    :id: integer
+    :source: yes or no</pre>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">copyright:</th><td class="field-body">Copyright 2010 Luis Artola.</td>
+</tr>
+<tr class="field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE.txt for details.</td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-restblog.directives.fullstory"></span><p>The restblog fullstory directive.</p>
+<p>Usage:</p>
+<div class="highlight-python"><pre>.. fullstory::</pre>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">copyright:</th><td class="field-body">Copyright 2010 Luis Artola.</td>
+</tr>
+<tr class="field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE.txt for details.</td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-restblog.directives.video"></span><p>The restblog video directive.</p>
+<p>Usage:</p>
+<div class="highlight-python"><pre>.. video:: url</pre>
+</div>
+<p>Or:</p>
+<div class="highlight-python"><pre>.. video:: type id</pre>
+</div>
+<p>Options:</p>
+<div class="highlight-python"><pre>:width: 400
+:height: 300
+:fullscreen: yes
+:scriptaccess: yes</pre>
+</div>
+<p>Options for vimeo only:</p>
+<div class="highlight-python"><pre>:title: yes
+:byline: yes
+:portrait: yes</pre>
+</div>
+<p>Examples:</p>
+<div class="highlight-python"><pre>.. video:: http://vimeo.com/7809605
+.. video:: vimeo 7809605
+.. video:: http://www.youtube.com/watch?v=37GrbCUvZEM
+.. video:: youtube 37GrbCUvZEM</pre>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">copyright:</th><td class="field-body">Copyright 2010 Luis Artola.</td>
+</tr>
+<tr class="field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE.txt for details.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-restblog.directives.rstpygments">
+<span id="third-party-directives"></span><h2>Third-party directives<a class="headerlink" href="#module-restblog.directives.rstpygments" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="the-pygments-restructuredtext-directive">
+<h3>The Pygments reStructuredText directive<a class="headerlink" href="#the-pygments-restructuredtext-directive" title="Permalink to this headline">¶</a></h3>
+<p>This fragment is a <a class="reference external" href="http://docutils.sf.net/">Docutils</a> 0.5 directive that renders source code
+(to HTML only, currently) via Pygments.</p>
+<p>To use it, adjust the options below and copy the code into a module
+that you import on initialization.  The code then automatically
+registers a <tt class="docutils literal"><span class="pre">sourcecode</span></tt> directive that you can use instead of
+normal code blocks like this:</p>
+<div class="highlight-python"><pre>.. sourcecode:: python
+
+    My code goes here.</pre>
+</div>
+<p>If you want to have different code styles, e.g. one with line numbers
+and one without, add formatters with their names in the VARIANTS dict
+below.  You can invoke them instead of the DEFAULT one by using a
+directive option:</p>
+<div class="highlight-python"><pre>.. sourcecode:: python
+    :linenos:
+
+    My code goes here.</pre>
+</div>
+<p>Look at the <a class="reference external" href="http://docutils.sourceforge.net/docs/howto/rst-directives.html">directive documentation</a> to get all the gory details.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">copyright:</th><td class="field-body">Copyright 2006-2009 by the Pygments team, see AUTHORS.</td>
+</tr>
+<tr class="field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for details.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="module-restblog.restblog2html">
+<span id="restblog-restblog2html"></span><h2>restblog.restblog2html<a class="headerlink" href="#module-restblog.restblog2html" title="Permalink to this headline">¶</a></h2>
+<p>Utility module that converts a reStructuredText file into XHTML.
+Based on the rst2html script provided by docutils with some hard-coded
+options that are suitable for restblog.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">copyright:</th><td class="field-body">Copyright 2010 Luis Artola.</td>
+</tr>
+<tr class="field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE.txt for details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="restblog.restblog2html.main">
+<tt class="descclassname">restblog.restblog2html.</tt><tt class="descname">main</tt><big>(</big><em>arguments</em><big>)</big><a class="reference internal" href="_modules/restblog/restblog2html.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restblog.restblog2html.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>main( arguments )</p>
+<p>Converts a reStructuredText file into an XHTML document.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li>arguments: A list of strings representing the command-line arguments
+to the <tt class="docutils literal"><span class="pre">rst2html</span></tt> executable, e.g. <tt class="docutils literal"><span class="pre">sys.argv[1:]</span></tt></li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="module-restblog.commandline">
+<span id="restblog-commandline"></span><h2>restblog.commandline<a class="headerlink" href="#module-restblog.commandline" title="Permalink to this headline">¶</a></h2>
+<p>Command-line interface to restblog.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">copyright:</th><td class="field-body">Copyright 2010 Luis Artola.</td>
+</tr>
+<tr class="field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE.txt for details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="restblog.commandline.run">
+<tt class="descclassname">restblog.commandline.</tt><tt class="descname">run</tt><big>(</big><em>arguments</em><big>)</big><a class="reference internal" href="_modules/restblog/commandline.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restblog.commandline.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>run( arguments )</p>
+<p>Parses and executes the given command-line <cite>arguments</cite>.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li>arguments: A list of strings representing the command-line arguments
+to the <tt class="docutils literal"><span class="pre">restblog</span></tt> executable, e.g. <tt class="docutils literal"><span class="pre">sys.argv[1:]</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="restblog.commandline.loadCommandByName">
+<tt class="descclassname">restblog.commandline.</tt><tt class="descname">loadCommandByName</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="_modules/restblog/commandline.html#loadCommandByName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#restblog.commandline.loadCommandByName" title="Permalink to this definition">¶</a></dt>
+<dd><p>loadCommandByName( name ) -&gt; module</p>
+<p>Locates and imports a restblog subcommand by the given <cite>name</cite>.</p>
+<p>Subcommands can be imported programmatically like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">restblog.commandline</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">command</span> <span class="o">=</span> <span class="n">restblog</span><span class="o">.</span><span class="n">commandline</span><span class="o">.</span><span class="n">loadCommandByName</span><span class="p">(</span> <span class="s">&#39;list&#39;</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">command</span><span class="o">.</span><span class="n">run</span><span class="p">(</span> <span class="s">&#39;--last=10&#39;</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>Returns a module object.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="indepth.html" title="How does it work?"
+             >previous</a> |</li>
+        <li><a href="index.html">restblog v1.2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, Luis Artola.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0b2.
+    </div>
+  </body>
+</html>

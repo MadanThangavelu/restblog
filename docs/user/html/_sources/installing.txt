@@ -1,0 +1,53 @@
+Getting and installing restblog
+===============================
+
+Downloading
+-----------
+
+``restblog`` is an open-source project hosted at SourceForge.
+
+- Main project site: http://restblog.sourceforge.net/
+- Download files: https://sourceforge.net/projects/restblog/files/
+
+Developers:
+
+- Get the source code::
+
+    svn co https://restblog.svn.sourceforge.net/svnroot/restblog restblog
+
+- Browse the code: http://restblog.svn.sourceforge.net/viewvc/restblog/
+
+Installing
+----------
+
+Currently, the package is self-contained in a very straightforward fashion. It
+is not packaged in any form suitable for either ``easy_install`` or ``pip``.
+Although, that's the next highest priority feature to get done.
+
+For the time being, all you have to do is get the package, unpack it and make
+sure the ``restblog`` binary in you path and the directory for the Python
+packages is somehow in your ``sys.path`` via ``PYTHONPATH`` or alternate
+mechanisms.
+
+For example::
+
+    tar xvzf restblog-1.2.0.tar.gz
+    cd restblog
+
+Unix, C-Shell::
+
+    source setupenviron.csh
+
+After that, you should be able to use ``restblog``. You can test by doing::
+
+    restblog
+
+or::
+
+    restblog --help
+
+
+
+
+
+

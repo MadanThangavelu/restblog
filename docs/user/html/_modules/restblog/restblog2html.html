@@ -1,0 +1,172 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>restblog.restblog2html &mdash; restblog v1.2.2 documentation</title>
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.2.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="restblog v1.2.2 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">restblog v1.2.2 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for restblog.restblog2html</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+
+<span class="c">#</span>
+<span class="c"># Copyright 2010. Luis Artola. All rights reserved.</span>
+<span class="c">#</span>
+
+<span class="c">#</span>
+<span class="c"># $URL: file:///svn/restblog/trunk/src/python/restblog/restblog2html.py $</span>
+<span class="c"># $Date: 2010-07-31 14:27:54 -0700 (Sat, 31 Jul 2010) $</span>
+<span class="c"># $Revision: 186 $</span>
+<span class="c">#</span>
+<span class="c"># History:</span>
+<span class="c"># 2010.06.27 lartola    Initial working version</span>
+<span class="c">#</span>
+
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Utility module that converts a reStructuredText file into XHTML.</span>
+<span class="sd">Based on the rst2html script provided by docutils with some hard-coded</span>
+<span class="sd">options that are suitable for restblog.</span>
+
+<span class="sd">:copyright: Copyright 2010 Luis Artola.</span>
+<span class="sd">:license: BSD, see LICENSE.txt for details.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">docutils.core</span> <span class="kn">import</span> <span class="n">default_description</span>
+<span class="kn">from</span> <span class="nn">docutils.core</span> <span class="kn">import</span> <span class="n">publish_cmdline</span>
+
+<span class="kn">from</span> <span class="nn">restblog.directives</span> <span class="kn">import</span> <span class="n">fullstory</span>
+<span class="kn">from</span> <span class="nn">restblog.directives</span> <span class="kn">import</span> <span class="n">restblogheader</span>
+<span class="kn">from</span> <span class="nn">restblog.directives</span> <span class="kn">import</span> <span class="n">rstpygments</span>
+<span class="kn">from</span> <span class="nn">restblog.directives</span> <span class="kn">import</span> <span class="n">video</span>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api.html#restblog.restblog2html.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span> <span class="n">arguments</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;main( arguments )</span>
+
+<span class="sd">    Converts a reStructuredText file into an XHTML document.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    - arguments: A list of strings representing the command-line arguments</span>
+<span class="sd">      to the ``rst2html`` executable, e.g. ``sys.argv[1:]``</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">locale</span>
+        <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="n">description</span> <span class="o">=</span> \
+        <span class="s">&#39;Generates (X)HTML documents from standalone reStructuredText &#39;</span> \
+        <span class="s">&#39;sources ready to be posted in a restblog site. &#39;</span> \
+        <span class="s">&#39;Highlights source code using Pygments. &#39;</span> \
+        <span class="o">+</span> <span class="n">default_description</span>
+
+    <span class="n">docutils_arguments</span> <span class="o">=</span> <span class="n">arguments</span> <span class="o">+</span> <span class="p">[</span>
+        <span class="s">&#39;--link-stylesheet&#39;</span><span class="p">,</span>
+        <span class="s">&#39;--stylesheet=tango.css&#39;</span><span class="p">,</span>
+        <span class="s">&#39;--cloak-email-addresses&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">arguments</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;Type reStructuredText and press Control-D when done:&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c"># TODO: There&#39;s gotta be a better way of communicating the source</span>
+        <span class="c"># file to the ``restblog.directives`` classes. For now, let&#39;s just</span>
+        <span class="c"># use a plain-old environment variable.</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span> <span class="s">&#39;RESTBLOG_SOURCE_FILE_NAME&#39;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c"># Let docutils work its magic.</span>
+    <span class="n">publish_cmdline</span><span class="p">(</span> <span class="n">writer_name</span><span class="o">=</span><span class="s">&#39;html&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span> <span class="n">argv</span><span class="o">=</span><span class="n">docutils_arguments</span> <span class="p">)</span>
+
+</div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">(</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">restblog v1.2.2 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, Luis Artola.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0b2.
+    </div>
+  </body>
+</html>

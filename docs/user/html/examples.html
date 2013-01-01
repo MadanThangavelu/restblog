@@ -1,0 +1,211 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Examples &mdash; restblog v1.2.2 documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.2.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="restblog v1.2.2 documentation" href="index.html" />
+    <link rel="next" title="How does it work?" href="indepth.html" />
+    <link rel="prev" title="restblog directives for docutils" href="directives.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="indepth.html" title="How does it work?"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="directives.html" title="restblog directives for docutils"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">restblog v1.2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Examples</a><ul>
+<li><a class="reference internal" href="#the-canonical-hello-world-of-restblog">The canonical &#8220;Hello World&#8221; of restblog</a></li>
+<li><a class="reference internal" href="#an-example-with-source-code-for-technical-bloggers">An example with source code for technical bloggers</a></li>
+<li><a class="reference internal" href="#embedding-videos">Embedding videos</a></li>
+<li><a class="reference internal" href="#simple-page">Simple page</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="directives.html"
+                        title="previous chapter">restblog directives for docutils</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="indepth.html"
+                        title="next chapter">How does it work?</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/examples.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="the-canonical-hello-world-of-restblog">
+<h2>The canonical &#8220;Hello World&#8221; of restblog<a class="headerlink" href="#the-canonical-hello-world-of-restblog" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><pre>.. restblog::
+    :title: Hello restblog world!
+
+This simple post was created with `restblog
+&lt;http://luisartola.com/software/restblog&gt;`_.</pre>
+</div>
+</div>
+<div class="section" id="an-example-with-source-code-for-technical-bloggers">
+<h2>An example with source code for technical bloggers<a class="headerlink" href="#an-example-with-source-code-for-technical-bloggers" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><pre>.. restblog::
+    :title: Sample code
+
+This sample post was created with `restblog
+&lt;http://luisartola.com/software/restblog&gt;`_.
+
+It also uses the nifty `Pygments &lt;http://pygments.org&gt;`_ Python package to
+highlight syntax in source code snippets.
+
+Here are some examples:
+
+C++
+---
+
+.. sourcecode:: c++
+
+    #include &lt;iostream&gt;
+
+    int main( int argc, char* argv[] )
+    {
+        std::cout &lt;&lt; "Hello world!" &lt;&lt; std::endl;
+        return 0;
+    }
+
+
+Python
+------
+
+.. sourcecode:: python
+
+    if __name__ == '__main__':
+        print 'Hello world!'
+
+XML
+---
+
+.. sourcecode:: xml
+
+    &lt;values&gt;
+        &lt;value name='one'&gt;1&lt;/value&gt;
+        &lt;value name='two'&gt;2&lt;/value&gt;
+    &lt;/values&gt;</pre>
+</div>
+</div>
+<div class="section" id="embedding-videos">
+<h2>Embedding videos<a class="headerlink" href="#embedding-videos" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><pre>.. restblog::
+    :title: Embedded video!
+
+Support embedding video from vimeo or YouTube in two ways:
+
+#. Directly from a URL:
+
+    .. video:: http://vimeo.com/7809605
+
+    .. video:: http://www.youtube.com/watch?v=37GrbCUvZEM
+
+#. Or, by service and video ID:
+
+    .. video:: vimeo 7809605
+
+    .. video:: youtube 37GrbCUvZEM</pre>
+</div>
+</div>
+<div class="section" id="simple-page">
+<h2>Simple page<a class="headerlink" href="#simple-page" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><pre>.. restblog::
+    :title: Thoughts
+    :type: page
+
+Managing pages is extremely simple, just specify ``:type: page`` in the
+``.. restblog::`` directive.</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="indepth.html" title="How does it work?"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="directives.html" title="restblog directives for docutils"
+             >previous</a> |</li>
+        <li><a href="index.html">restblog v1.2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, Luis Artola.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0b2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,255 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>restblog in 5 minutes &mdash; restblog v1.2.2 documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.2.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="restblog v1.2.2 documentation" href="index.html" />
+    <link rel="next" title="What is the motivation?" href="motivation.html" />
+    <link rel="prev" title="Blogging using reStructuredText" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="motivation.html" title="What is the motivation?"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Blogging using reStructuredText"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">restblog v1.2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">restblog in 5 minutes</a><ul>
+<li><a class="reference internal" href="#what-you-need">What you need</a></li>
+<li><a class="reference internal" href="#connecting-to-your-blog">Connecting to your blog</a></li>
+<li><a class="reference internal" href="#listing-recent-posts">Listing recent posts</a></li>
+<li><a class="reference internal" href="#drafting-a-post">Drafting a post</a></li>
+<li><a class="reference internal" href="#inserting-the-post">Inserting the post</a></li>
+<li><a class="reference internal" href="#classifying-and-tagging-a-post">Classifying and tagging a post</a></li>
+<li><a class="reference internal" href="#updating-a-post">Updating a post</a></li>
+<li><a class="reference internal" href="#deleting-a-post">Deleting a post</a></li>
+<li><a class="reference internal" href="#managing-pages">Managing pages</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Blogging using reStructuredText</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="motivation.html"
+                        title="next chapter">What is the motivation?</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/overview.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="restblog-in-5-minutes">
+<h1>restblog in 5 minutes<a class="headerlink" href="#restblog-in-5-minutes" title="Permalink to this headline">¶</a></h1>
+<p>This gives you a tour of all you can do with restblog.</p>
+<div class="section" id="what-you-need">
+<h2>What you need<a class="headerlink" href="#what-you-need" title="Permalink to this headline">¶</a></h2>
+<p>All you need is a text editor and a shell, terminal or command prompt.
+You also need to have a Wordpress blog already installed with XMLRPC enabled.</p>
+</div>
+<div class="section" id="connecting-to-your-blog">
+<h2>Connecting to your blog<a class="headerlink" href="#connecting-to-your-blog" title="Permalink to this headline">¶</a></h2>
+<p>Type the following on a shell:</p>
+<div class="highlight-python"><pre>restblog init your.blog.com http://your.blog.com/xmlrpc.php user --interactive</pre>
+</div>
+<p>Type your password at the prompt.</p>
+<p>This creates a directory called <tt class="docutils literal"><span class="pre">your.blog.com</span></tt> under your current directory
+and connects to the given URL with the given user name. The <tt class="docutils literal"><span class="pre">--interactive</span></tt>
+flag prompts for a password so you don&#8217;t have to type it in the command-line
+directly.</p>
+<p>Now, let&#8217;s make that your current directory:</p>
+<div class="highlight-python"><pre>cd your.blog.com</pre>
+</div>
+</div>
+<div class="section" id="listing-recent-posts">
+<h2>Listing recent posts<a class="headerlink" href="#listing-recent-posts" title="Permalink to this headline">¶</a></h2>
+<p>The following command lists the most recent posts in your blog:</p>
+<div class="highlight-python"><pre>restblog list</pre>
+</div>
+<p>For example:</p>
+<div class="highlight-python"><pre>2   Second post         20100707 07:07
+1   Hello world!        20100701 01:00</pre>
+</div>
+</div>
+<div class="section" id="drafting-a-post">
+<h2>Drafting a post<a class="headerlink" href="#drafting-a-post" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><pre>restblog draft new-post.rst --title='New post using restblog!'</pre>
+</div>
+<p>This creates a file named <tt class="docutils literal"><span class="pre">new-post.rst</span></tt> that looks like this:</p>
+<div class="highlight-python"><pre>.. restblog::
+    :title: New post using restblog!
+    :type: post
+
+.. Replace this line with the contents of your post</pre>
+</div>
+<p>Simply open this file with a text editor of your choice and write the contents
+of your post, e.g.:</p>
+<div class="highlight-python"><pre>.. restblog::
+    :title: New post using restblog!
+    :type: post
+
+This is an example of creating a post using ``restblog``.
+
+.. fullstory::
+
+It also supports explicit excerpts. By using the ``.. fullstory::``
+directive directly above from this line, it splits the post into excerpt
+and full contents.</pre>
+</div>
+<p>Save it and go back to your shell.</p>
+</div>
+<div class="section" id="inserting-the-post">
+<h2>Inserting the post<a class="headerlink" href="#inserting-the-post" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><pre>restblog insert new-post.rst</pre>
+</div>
+<p>That&#8217;s it! Go to a web browser and you will see your new post published.</p>
+<p>After inserting a post, <tt class="docutils literal"><span class="pre">restblog</span></tt> puts more metdata into the <tt class="docutils literal"><span class="pre">..</span>
+<span class="pre">restblog::</span></tt> directive used in the post. The directive for the post above
+would look like this after the insertion:</p>
+<div class="highlight-python"><pre>.. restblog::
+    :categories:
+    :id: 3
+    :publish: yes
+    :source: no
+    :tags:
+    :title: New post using restblog!
+    :type: post</pre>
+</div>
+<p>The directive is explained in full detailed in this page
+<em class="xref std std-ref">directives-restblog</em>.</p>
+</div>
+<div class="section" id="classifying-and-tagging-a-post">
+<h2>Classifying and tagging a post<a class="headerlink" href="#classifying-and-tagging-a-post" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">..</span> <span class="pre">restblog::</span></tt> directive supports two options: <tt class="docutils literal"><span class="pre">:categories</span></tt> and
+<tt class="docutils literal"><span class="pre">:tags:</span></tt>. Both expect a comma-separated list of strings. Let&#8217;s classify the
+post inserted above. Open <tt class="docutils literal"><span class="pre">new-post.rst</span></tt> again in a text editor and change
+the contents of these two options to look like this:</p>
+<div class="highlight-python"><pre>:categories: Uncategorized
+:tags: demo, restblog</pre>
+</div>
+</div>
+<div class="section" id="updating-a-post">
+<h2>Updating a post<a class="headerlink" href="#updating-a-post" title="Permalink to this headline">¶</a></h2>
+<p>After you modify the contents of a previosly inserted post, you can send the
+changes to your blog by typing the following:</p>
+<div class="highlight-python"><pre>restblog update new-post.rst</pre>
+</div>
+<p>In the example above, the post would now appear under the <em>Uncategorized</em>
+category and will be tagged as <em>demo</em> and <em>restblog</em>.</p>
+</div>
+<div class="section" id="deleting-a-post">
+<h2>Deleting a post<a class="headerlink" href="#deleting-a-post" title="Permalink to this headline">¶</a></h2>
+<p>All you need is the post ID and the <tt class="docutils literal"><span class="pre">delete</span></tt> command, e.g.:</p>
+<div class="highlight-python"><pre>restblog delete 3</pre>
+</div>
+<p>Would delete the post inserted above.</p>
+</div>
+<div class="section" id="managing-pages">
+<h2>Managing pages<a class="headerlink" href="#managing-pages" title="Permalink to this headline">¶</a></h2>
+<p>Inserting, updating and deleting pages works exactly the same as with posts.
+The only two things to distinguish them are:</p>
+<ol class="arabic">
+<li><p class="first">The <tt class="docutils literal"><span class="pre">:type:</span></tt> option for the <tt class="docutils literal"><span class="pre">..</span> <span class="pre">restblog::</span></tt> directive should be set to
+<tt class="docutils literal"><span class="pre">page</span></tt> instead of <tt class="docutils literal"><span class="pre">post</span></tt>, e.g.:</p>
+<div class="highlight-python"><pre>.. restblog::
+    :title: Examples
+    :type: page</pre>
+</div>
+</li>
+<li><p class="first">The <tt class="docutils literal"><span class="pre">draft</span></tt> command provides a <tt class="docutils literal"><span class="pre">--page</span></tt> option, e.g.:</p>
+<div class="highlight-python"><pre>restblog draft new-page.rst --title='Examples' --page</pre>
+</div>
+</li>
+</ol>
+<p>That&#8217;s pretty much it.</p>
+<p>The following sections describe the directives that can be used in your posts.
+Also, documentation about the internals of restblog and API for developers.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="motivation.html" title="What is the motivation?"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Blogging using reStructuredText"
+             >previous</a> |</li>
+        <li><a href="index.html">restblog v1.2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, Luis Artola.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0b2.
+    </div>
+  </body>
+</html>

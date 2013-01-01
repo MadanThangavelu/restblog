@@ -1,0 +1,166 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Getting and installing restblog &mdash; restblog v1.2.2 documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.2.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="restblog v1.2.2 documentation" href="index.html" />
+    <link rel="next" title="restblog directives for docutils" href="directives.html" />
+    <link rel="prev" title="What is the motivation?" href="motivation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="directives.html" title="restblog directives for docutils"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="motivation.html" title="What is the motivation?"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">restblog v1.2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Getting and installing restblog</a><ul>
+<li><a class="reference internal" href="#downloading">Downloading</a></li>
+<li><a class="reference internal" href="#installing">Installing</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="motivation.html"
+                        title="previous chapter">What is the motivation?</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="directives.html"
+                        title="next chapter">restblog directives for docutils</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/installing.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="getting-and-installing-restblog">
+<h1>Getting and installing restblog<a class="headerlink" href="#getting-and-installing-restblog" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="downloading">
+<h2>Downloading<a class="headerlink" href="#downloading" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">restblog</span></tt> is an open-source project hosted at SourceForge.</p>
+<ul class="simple">
+<li>Main project site: <a class="reference external" href="http://restblog.sourceforge.net/">http://restblog.sourceforge.net/</a></li>
+<li>Download files: <a class="reference external" href="https://sourceforge.net/projects/restblog/files/">https://sourceforge.net/projects/restblog/files/</a></li>
+</ul>
+<p>Developers:</p>
+<ul>
+<li><p class="first">Get the source code:</p>
+<div class="highlight-python"><pre>svn co https://restblog.svn.sourceforge.net/svnroot/restblog restblog</pre>
+</div>
+</li>
+<li><p class="first">Browse the code: <a class="reference external" href="http://restblog.svn.sourceforge.net/viewvc/restblog/">http://restblog.svn.sourceforge.net/viewvc/restblog/</a></p>
+</li>
+</ul>
+</div>
+<div class="section" id="installing">
+<h2>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h2>
+<p>Currently, the package is self-contained in a very straightforward fashion. It
+is not packaged in any form suitable for either <tt class="docutils literal"><span class="pre">easy_install</span></tt> or <tt class="docutils literal"><span class="pre">pip</span></tt>.
+Although, that&#8217;s the next highest priority feature to get done.</p>
+<p>For the time being, all you have to do is get the package, unpack it and make
+sure the <tt class="docutils literal"><span class="pre">restblog</span></tt> binary in you path and the directory for the Python
+packages is somehow in your <tt class="docutils literal"><span class="pre">sys.path</span></tt> via <tt class="docutils literal"><span class="pre">PYTHONPATH</span></tt> or alternate
+mechanisms.</p>
+<p>For example:</p>
+<div class="highlight-python"><pre>tar xvzf restblog-1.2.0.tar.gz
+cd restblog</pre>
+</div>
+<p>Unix, C-Shell:</p>
+<div class="highlight-python"><pre>source setupenviron.csh</pre>
+</div>
+<p>After that, you should be able to use <tt class="docutils literal"><span class="pre">restblog</span></tt>. You can test by doing:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">restblog</span>
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">restblog</span> <span class="o">--</span><span class="n">help</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="directives.html" title="restblog directives for docutils"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="motivation.html" title="What is the motivation?"
+             >previous</a> |</li>
+        <li><a href="index.html">restblog v1.2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, Luis Artola.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0b2.
+    </div>
+  </body>
+</html>

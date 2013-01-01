@@ -1,0 +1,385 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>restblog.post &mdash; restblog v1.2.2 documentation</title>
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.2.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="restblog v1.2.2 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">restblog v1.2.2 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for restblog.post</h1><div class="highlight"><pre>
+<span class="c"># No shebang line. This module is meant to be imported.</span>
+
+<span class="c">#</span>
+<span class="c"># Copyright 2010. Luis Artola. All rights reserved.</span>
+<span class="c">#</span>
+
+<span class="c">#</span>
+<span class="c"># $URL: file:///svn/restblog/trunk/src/python/restblog/post.py $</span>
+<span class="c"># $Date: 2010-07-31 14:27:54 -0700 (Sat, 31 Jul 2010) $</span>
+<span class="c"># $Revision: 186 $</span>
+<span class="c">#</span>
+<span class="c"># History:</span>
+<span class="c"># 2010.06.30 lartola    Initial working version</span>
+<span class="c">#</span>
+
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Functions to transform and manipulate a restblog post from XHTML.</span>
+
+<span class="sd">:copyright: Copyright 2010 Luis Artola.</span>
+<span class="sd">:license: BSD, see LICENSE.txt for details.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">from</span> <span class="nn">xml.etree</span> <span class="kn">import</span> <span class="n">ElementTree</span>
+
+<span class="kn">import</span> <span class="nn">restblog2html</span>
+
+
+<div class="viewcode-block" id="createFormattedPost"><a class="viewcode-back" href="../../api.html#restblog.post.createFormattedPost">[docs]</a><span class="k">def</span> <span class="nf">createFormattedPost</span><span class="p">(</span> <span class="n">file_name</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;createFormattedPost( file_name ) -&gt; str</span>
+
+<span class="sd">    Translates the given `file_name` into an XHTML document.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    - file_name: Input file with a post in reStructuredText format.</span>
+
+<span class="sd">    Returns the name of a file with the XHTML document.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">output_file</span><span class="p">,</span> <span class="n">output_file_name</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">(</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&#39;restblog_&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s">&#39;.html&#39;</span> <span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">close</span><span class="p">(</span> <span class="n">output_file</span> <span class="p">)</span>
+    <span class="n">arguments</span> <span class="o">=</span> <span class="p">[</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">output_file_name</span> <span class="p">]</span>
+    <span class="n">restblog2html</span><span class="o">.</span><span class="n">main</span><span class="p">(</span> <span class="n">arguments</span> <span class="p">)</span>
+    <span class="k">return</span> <span class="n">output_file_name</span>
+
+</div>
+<div class="viewcode-block" id="getPostContents"><a class="viewcode-back" href="../../api.html#restblog.post.getPostContents">[docs]</a><span class="k">def</span> <span class="nf">getPostContents</span><span class="p">(</span> <span class="n">file_name</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;getPostContents( file_name ) -&gt; ( `xml.etree.ElementTree.Element`, dict )</span>
+
+<span class="sd">    Extracts the relevant portions of the post from the given XHTML `file_name`.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    </span>
+<span class="sd">    - file_name: Name of the XHTML input file name.</span>
+
+<span class="sd">    Returns a tuple with the following values:</span>
+
+<span class="sd">    - An `xml.etree.ElementTree.Element` that contains the post metadata. This is</span>
+<span class="sd">      basically the options extracted from the ``.. restblog::`` directive</span>
+<span class="sd">      stored in the input reStructuredText file used to produce the given XHTML</span>
+<span class="sd">      `file_name`. See `restblog.directives.restblogheader` for more information.</span>
+
+<span class="sd">    - A dictionary with the actual portion of the XHTML document that contains</span>
+<span class="sd">      the post contents. Contains the following keys:</span>
+<span class="sd">            </span>
+<span class="sd">        - title: str</span>
+<span class="sd">        - description: str</span>
+<span class="sd">        - mt_excerpt: str</span>
+<span class="sd">        - mt_text_more: str</span>
+<span class="sd">        - mt_keywords: list</span>
+<span class="sd">        - categories: list</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c"># The input XHTML as generated by restblog uses namespaces</span>
+    <span class="n">namespace</span> <span class="o">=</span> <span class="s">&#39;http://www.w3.org/1999/xhtml&#39;</span>
+    <span class="n">body_tag</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">QName</span><span class="p">(</span> <span class="n">namespace</span><span class="p">,</span> <span class="s">&#39;body&#39;</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="n">div_tag</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">QName</span><span class="p">(</span> <span class="n">namespace</span><span class="p">,</span> <span class="s">&#39;div&#39;</span> <span class="p">)</span> <span class="p">)</span>
+
+    <span class="c"># Parse document for tearing it apart easily</span>
+    <span class="n">document</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span> <span class="n">file_name</span> <span class="p">)</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">find</span><span class="p">(</span> <span class="n">body_tag</span> <span class="p">)</span>
+
+    <span class="c"># Find tags with special meaning for restblog</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">getiterator</span><span class="p">(</span> <span class="n">div_tag</span> <span class="p">)</span>
+    <span class="n">metadata_node</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">full_story_sentinel</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">full_story_sentinel_index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span> <span class="n">nodes</span> <span class="p">):</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span> <span class="s">&#39;name&#39;</span> <span class="p">)</span> <span class="o">==</span> <span class="s">&#39;restblogmetadata&#39;</span><span class="p">:</span>
+            <span class="n">metadata_node</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span> <span class="s">&#39;name&#39;</span> <span class="p">)</span> <span class="o">==</span> <span class="s">&#39;restblogfullstory&#39;</span><span class="p">:</span>
+            <span class="n">full_story_sentinel</span> <span class="o">=</span> <span class="n">node</span>
+            <span class="n">full_story_sentinel_index</span> <span class="o">=</span> <span class="n">index</span>
+    <span class="k">if</span> <span class="n">metadata_node</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">,</span> <span class="s">&#39;Unable to find restblog metadata in the formated post.&#39;</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">XML</span><span class="p">(</span> <span class="n">metadata_node</span><span class="o">.</span><span class="n">text</span> <span class="p">)</span>
+
+    <span class="c"># Extract actual contents of the post</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span> <span class="s">&#39;title&#39;</span> <span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">title</span><span class="p">:</span>
+        <span class="n">name</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span> <span class="n">file_name</span> <span class="p">)</span> <span class="p">)</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="n">categories</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span> <span class="s">&#39;categories&#39;</span><span class="p">,</span> <span class="p">[]</span> <span class="p">)</span>
+    <span class="k">if</span> <span class="n">categories</span><span class="p">:</span>
+        <span class="n">categories</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span> <span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span> <span class="n">categories</span><span class="o">.</span><span class="n">split</span><span class="p">(</span> <span class="s">&#39;,&#39;</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="n">tags</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span> <span class="s">&#39;tags&#39;</span><span class="p">,</span> <span class="p">[]</span> <span class="p">)</span>
+    <span class="k">if</span> <span class="n">tags</span><span class="p">:</span>
+        <span class="n">tags</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span> <span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span> <span class="n">tags</span><span class="o">.</span><span class="n">split</span><span class="p">(</span> <span class="s">&#39;,&#39;</span> <span class="p">)</span> <span class="p">)</span>
+
+    <span class="c"># Translate XHTML portions we actually care about</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">body</span><span class="o">.</span><span class="n">find</span><span class="p">(</span> <span class="n">div_tag</span> <span class="p">)</span>
+    <span class="n">removeLineBreaksFromElement</span><span class="p">(</span> <span class="n">body</span> <span class="p">)</span>
+    <span class="k">if</span> <span class="n">metadata_node</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">body</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span> <span class="n">metadata_node</span> <span class="p">)</span>
+    <span class="k">if</span> <span class="n">full_story_sentinel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">comment</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">Comment</span><span class="p">(</span> <span class="s">&#39;more&#39;</span> <span class="p">)</span>
+        <span class="n">body</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span> <span class="n">full_story_sentinel_index</span><span class="p">,</span> <span class="n">comment</span> <span class="p">)</span>
+        <span class="n">body</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span> <span class="n">full_story_sentinel</span> <span class="p">)</span>
+    <span class="n">post</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span> <span class="n">body</span> <span class="p">)</span>
+
+    <span class="c"># Remove any namespace notation from tags and translate special tags</span>
+    <span class="n">post</span> <span class="o">=</span> <span class="n">post</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span> <span class="s">&#39;&lt;html:&#39;</span><span class="p">,</span> <span class="s">&#39;&lt;&#39;</span> <span class="p">)</span>
+    <span class="n">post</span> <span class="o">=</span> <span class="n">post</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span> <span class="s">&#39;&lt;/html:&#39;</span><span class="p">,</span> <span class="s">&#39;&lt;/&#39;</span> <span class="p">)</span>
+    <span class="n">post</span> <span class="o">=</span> <span class="n">post</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span> <span class="s">&#39;&lt;!-- more --&gt;&#39;</span><span class="p">,</span> <span class="s">&#39;&lt;!--more--&gt;&#39;</span> <span class="p">)</span>
+    <span class="n">post</span> <span class="o">=</span> <span class="n">post</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="c"># Build contents as expected by the metaWeblog.newPost API method</span>
+    <span class="n">contents</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">post</span><span class="p">,</span>
+        <span class="n">mt_excerpt</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">mt_text_more</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">mt_keywords</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span>
+        <span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">contents</span>
+    
+</div>
+<span class="k">def</span> <span class="nf">removeLineBreaksFromElement</span><span class="p">(</span> <span class="n">element</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;removeLineBreaksFromElement( element )</span>
+
+<span class="sd">    Removes line breaks from text in paragraphs that is not preformatted.</span>
+<span class="sd">    For some reason, Wordpress appears to be - incorrectly IMHO, replacing</span>
+<span class="sd">    new-line characters with an actual line break, i.e. &lt;br /&gt;</span>
+
+<span class="sd">    Needless to say, that just goes against what straight HTML would do,</span>
+<span class="sd">    i.e. text in paragraphs does not respect line breaks and it&#39;s rendered</span>
+<span class="sd">    as one contiguous line, e.g.::</span>
+
+<span class="sd">        &lt;p&gt;one</span>
+<span class="sd">        two three</span>
+<span class="sd">        four five six&lt;/p&gt;</span>
+
+<span class="sd">    Should be rendered as::</span>
+
+<span class="sd">        one two three four five six</span>
+
+<span class="sd">    Not::</span>
+
+<span class="sd">        one&lt;br /&gt;</span>
+<span class="sd">        two three&lt;br /&gt;</span>
+<span class="sd">        four five six</span>
+
+<span class="sd">    Simply because it is a &lt;p/&gt; element not &lt;pre/&gt;.</span>
+
+<span class="sd">    In any event, this function removes all line breaks and turns multiline</span>
+<span class="sd">    paragraphs into a single running line of text.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    - element: An `xml.etree.ElementTree.Element` whose text will be stripped</span>
+<span class="sd">      off new-line characters.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">removeLineBreaks</span><span class="p">(</span> <span class="n">text</span> <span class="p">):</span>
+        <span class="k">if</span> <span class="n">text</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">text</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span> <span class="p">)</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="n">lines</span> <span class="p">)</span>
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="n">namespace</span> <span class="o">=</span> <span class="s">&#39;http://www.w3.org/1999/xhtml&#39;</span>
+    <span class="n">p_tag</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">QName</span><span class="p">(</span> <span class="n">namespace</span><span class="p">,</span> <span class="s">&#39;p&#39;</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="n">paragraphs</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span> <span class="n">p_tag</span> <span class="p">)</span>
+    <span class="k">for</span> <span class="n">paragraph</span> <span class="ow">in</span> <span class="n">paragraphs</span><span class="p">:</span>
+        <span class="n">paragraph</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">removeLineBreaks</span><span class="p">(</span> <span class="n">paragraph</span><span class="o">.</span><span class="n">text</span> <span class="p">)</span>
+        <span class="n">paragraph</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">removeLineBreaks</span><span class="p">(</span> <span class="n">paragraph</span><span class="o">.</span><span class="n">tail</span> <span class="p">)</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">paragraph</span><span class="o">.</span><span class="n">getchildren</span><span class="p">():</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">removeLineBreaks</span><span class="p">(</span> <span class="n">child</span><span class="o">.</span><span class="n">text</span> <span class="p">)</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">removeLineBreaks</span><span class="p">(</span> <span class="n">child</span><span class="o">.</span><span class="n">tail</span> <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">updateSourceMetadata</span><span class="p">(</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">metadata</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;updateSourceMetadata( file_name, metadata )</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    - file_name: File to the source post in reStructuredText to be updated.</span>
+<span class="sd">    - metadata: An `xml.etree.ElementTree.Element` representing all the values</span>
+<span class="sd">      that describe a post. This maps to all the options to the</span>
+<span class="sd">      ``.. restblog::`` directive.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">before</span><span class="p">,</span> <span class="n">restblog</span><span class="p">,</span> <span class="n">after</span> <span class="o">=</span> <span class="n">splitSourceAtRestblogDirective</span><span class="p">(</span> <span class="n">file_name</span> <span class="p">)</span>
+    <span class="n">restblog</span> <span class="o">=</span> <span class="n">buildRestblogFromMetadata</span><span class="p">(</span> <span class="n">metadata</span> <span class="p">)</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">before</span> <span class="o">+</span> <span class="n">restblog</span> <span class="o">+</span> <span class="n">after</span>
+    <span class="nb">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span> <span class="n">file_name</span><span class="p">,</span> <span class="s">&#39;w&#39;</span> <span class="p">)</span>
+    <span class="nb">file</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span> <span class="n">lines</span> <span class="p">)</span>
+    <span class="nb">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">splitSourceAtRestblogDirective</span><span class="p">(</span> <span class="n">file_name</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;splitSourceAtRestblogDirective( file_name ) -&gt; ( list, list, list )</span>
+
+<span class="sd">    Locates the block containing a ``.. restblog::`` directive and splits</span>
+<span class="sd">    the contents. Returns the block of lines before, the restblog block and</span>
+<span class="sd">    the lines after it.</span>
+
+<span class="sd">    I&#39;m sure there is a better way, but given the structure of a</span>
+<span class="sd">    reStructuredText document, let&#39;s take a naive approach and scan the file</span>
+<span class="sd">    to update the lines starting with ``.. restblog::`` and the contiguous lines</span>
+<span class="sd">    before an empty line with the given metadata, e.g.::</span>
+<span class="sd">    </span>
+<span class="sd">        .. restblog::</span>
+<span class="sd">           :title: Some title here</span>
+<span class="sd">           :source: yes</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    - file_name: File to the source post in reStructuredText to split.</span>
+
+<span class="sd">    Returns a tuple of three lists with the lines before the directive, the</span>
+<span class="sd">    directive itself and after it.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="nb">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span> <span class="n">file_name</span><span class="p">,</span> <span class="s">&#39;r&#39;</span> <span class="p">)</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="nb">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+    <span class="nb">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="n">before</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">restblog</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">after</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">extracting</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span> <span class="n">lines</span> <span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">extracting</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s">&#39;.. restblog::&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">extracting</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="n">restblog</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">line</span> <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">before</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">line</span> <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+                <span class="n">restblog</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">line</span> <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c"># we&#39;ve reached the end of the directive as indicated by an</span>
+                <span class="c"># empty line.</span>
+                <span class="n">extracting</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="n">after</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+                <span class="k">break</span>
+
+    <span class="k">return</span> <span class="n">before</span><span class="p">,</span> <span class="n">restblog</span><span class="p">,</span> <span class="n">after</span>
+
+
+<span class="k">def</span> <span class="nf">buildRestblogFromMetadata</span><span class="p">(</span> <span class="n">metadata</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;buildRestblogFromMetadata( metadata ) -&gt; list</span>
+
+<span class="sd">    Recreates a ``.. restblog::`` directive from the given `metadata`.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    - metadata: An `xml.etree.ElementTree.Element` with all the values to</span>
+<span class="sd">      describe a post.</span>
+
+<span class="sd">    Returns a list of strings.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&#39;.. restblog::</span><span class="se">\n</span><span class="s">&#39;</span> <span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span> <span class="n">metadata</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="p">):</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="s">&#39;    :</span><span class="si">%(key)s</span><span class="s">: </span><span class="si">%(value)s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">()</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">line</span> <span class="p">)</span>
+
+    <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span> <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">lines</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">restblog v1.2.2 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, Luis Artola.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0b2.
+    </div>
+  </body>
+</html>

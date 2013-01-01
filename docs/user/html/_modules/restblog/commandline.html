@@ -1,0 +1,203 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>restblog.commandline &mdash; restblog v1.2.2 documentation</title>
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.2.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="restblog v1.2.2 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">restblog v1.2.2 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for restblog.commandline</h1><div class="highlight"><pre>
+<span class="c"># No shebang line. This module is meant to be imported.</span>
+
+<span class="c">#</span>
+<span class="c"># Copyright 2010. Luis Artola. All rights reserved.</span>
+<span class="c">#</span>
+
+<span class="c">#</span>
+<span class="c"># $URL: file:///svn/restblog/trunk/src/python/restblog/commandline.py $</span>
+<span class="c"># $Date: 2010-07-31 14:27:54 -0700 (Sat, 31 Jul 2010) $</span>
+<span class="c"># $Revision: 186 $</span>
+<span class="c">#</span>
+<span class="c"># History:</span>
+<span class="c"># 2010.06.24 lartola    Initial working version</span>
+<span class="c">#</span>
+
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Command-line interface to restblog.</span>
+
+<span class="sd">:copyright: Copyright 2010 Luis Artola.</span>
+<span class="sd">:license: BSD, see LICENSE.txt for details.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">imp</span>
+<span class="kn">from</span> <span class="nn">optparse</span> <span class="kn">import</span> <span class="n">OptionParser</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">logger</span> <span class="kn">import</span> <span class="n">logger</span>
+
+
+<span class="k">def</span> <span class="nf">getCommandsRoot</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;getCommandsRoot() -&gt; str</span>
+
+<span class="sd">    Returns absolute path to the ``commands`` directory inside the ``restblog``</span>
+<span class="sd">    package. Note that this is *not* a Python subpackage, it is just a plain</span>
+<span class="sd">    *directory*.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span> <span class="n">__file__</span> <span class="p">)</span>
+    <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="n">root</span><span class="p">,</span> <span class="s">&#39;commands&#39;</span> <span class="p">)</span>
+    <span class="k">return</span> <span class="n">directory</span>
+
+
+<span class="k">def</span> <span class="nf">getCommandNames</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;getCommandNames() -&gt; list</span>
+
+<span class="sd">    Returns a list of string with then names of all the subcommands available</span>
+<span class="sd">    for the ``restblog`` executable. Subcommands are simple Python modules</span>
+<span class="sd">    inside the ``restblog/commands`` *directory*.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">root</span> <span class="o">=</span> <span class="n">getCommandsRoot</span><span class="p">()</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="n">root</span><span class="p">,</span> <span class="s">&#39;*.py&#39;</span> <span class="p">)</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span> <span class="n">pattern</span> <span class="p">)</span>
+    <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">name</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span> <span class="nb">file</span> <span class="p">)</span> <span class="p">)</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">!=</span> <span class="s">&#39;restblog&#39;</span><span class="p">:</span>
+            <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">name</span> <span class="p">)</span>
+    <span class="k">return</span> <span class="n">names</span>
+
+
+<div class="viewcode-block" id="loadCommandByName"><a class="viewcode-back" href="../../api.html#restblog.commandline.loadCommandByName">[docs]</a><span class="k">def</span> <span class="nf">loadCommandByName</span><span class="p">(</span> <span class="n">name</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;loadCommandByName( name ) -&gt; module</span>
+
+<span class="sd">    Locates and imports a restblog subcommand by the given `name`.</span>
+
+<span class="sd">    Subcommands can be imported programmatically like this::</span>
+
+<span class="sd">        &gt;&gt;&gt; import restblog.commandline</span>
+<span class="sd">        &gt;&gt;&gt; command = restblog.commandline.loadCommandByName( &#39;list&#39; )</span>
+<span class="sd">        &gt;&gt;&gt; command.run( &#39;--last=10&#39; )</span>
+
+<span class="sd">    Returns a module object.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">root</span> <span class="o">=</span> <span class="n">getCommandsRoot</span><span class="p">()</span>
+    <span class="nb">file</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">description</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">find_module</span><span class="p">(</span> <span class="n">name</span><span class="p">,</span> <span class="p">[</span> <span class="n">root</span> <span class="p">]</span> <span class="p">)</span>
+    <span class="n">module</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">load_module</span><span class="p">(</span> <span class="n">name</span><span class="p">,</span> <span class="nb">file</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">description</span> <span class="p">)</span>
+    <span class="k">return</span> <span class="n">module</span>
+
+</div>
+<div class="viewcode-block" id="run"><a class="viewcode-back" href="../../api.html#restblog.commandline.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">(</span> <span class="n">arguments</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;run( arguments )</span>
+
+<span class="sd">    Parses and executes the given command-line `arguments`.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    - arguments: A list of strings representing the command-line arguments</span>
+<span class="sd">      to the ``restblog`` executable, e.g. ``sys.argv[1:]``</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">names</span> <span class="o">=</span> <span class="n">getCommandNames</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">arguments</span> <span class="ow">and</span> <span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+        <span class="c"># We are invoking a subcommand, e.g. restblog list</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">arguments</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c"># Running main command by itself, i.e. restblog</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;restblog&#39;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">loadCommandByName</span><span class="p">(</span> <span class="n">name</span> <span class="p">)</span>
+        <span class="n">command</span><span class="o">.</span><span class="n">run</span><span class="p">(</span> <span class="n">arguments</span> <span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span> <span class="s">&#39;Unable to execute </span><span class="si">%(name)s</span><span class="s"> command.&#39;</span><span class="p">,</span> <span class="nb">locals</span><span class="p">()</span> <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span> <span class="s">&#39;Details: </span><span class="si">%(ex)s</span><span class="s">&#39;</span><span class="p">,</span> <span class="nb">locals</span><span class="p">()</span> <span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;Type </span><span class="se">\&#39;</span><span class="s">restblog </span><span class="si">%(name)s</span><span class="s"> --help</span><span class="se">\&#39;</span><span class="s"> for usage.&#39;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">()</span>
+ 
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">restblog v1.2.2 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, Luis Artola.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0b2.
+    </div>
+  </body>
+</html>
